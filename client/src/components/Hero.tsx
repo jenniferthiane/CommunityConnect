@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 const Hero = () => {
   return (
-    <header className="h-screen flex flex-col justify-center items-center text-center p-6 animate-fade-in relative overflow-hidden">
+    <header className="min-h-[calc(100vh-3rem)] flex flex-col justify-center items-center text-center p-6 animate-fade-in relative overflow-hidden">
       {/* Container com efeito de brilho e neblina para o título */}
       <div className="relative z-10">
         <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-tight text-shadow-lg">

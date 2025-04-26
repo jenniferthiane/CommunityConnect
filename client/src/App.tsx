@@ -7,6 +7,7 @@ import JoinSection from "@/components/JoinSection";
 import FloatingButtons from "@/components/FloatingButtons";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import ServerStatus from "@/components/ServerStatus";
 
 function App() {
   return (
@@ -21,19 +22,25 @@ function App() {
       {/* Overlay gradiente para melhorar a legibilidade do texto */}
       <div className="fixed inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80 -z-10" />
       
-      <Hero />
+      {/* Barra de status do servidor */}
+      <ServerStatus />
+      
+      {/* Adicionado padding-top para compensar a barra fixa no topo */}
+      <div className="pt-12">
+        <Hero />
 
-      <main className="max-w-7xl mx-auto px-4 py-8 space-y-16">
-        <AboutSection />
-        <TestimonialsSection />
-        <GallerySection />
-        <RulesSection />
-        <JoinSection />
-      </main>
+        <main className="max-w-7xl mx-auto px-4 py-8 space-y-16">
+          <AboutSection />
+          <TestimonialsSection />
+          <GallerySection />
+          <RulesSection />
+          <JoinSection />
+        </main>
 
-      <FloatingButtons />
-      <ScrollToTop />
-      <Footer />
+        <FloatingButtons />
+        <ScrollToTop />
+        <Footer />
+      </div>
     </div>
   );
 }
