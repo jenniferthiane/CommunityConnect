@@ -33,10 +33,18 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    background-color: #111;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Melhorando o efeito de paralaxe ao rolar a página */
+  .bg-fixed {
+    background-attachment: fixed;
+    transform: translateZ(0);
+    will-change: transform;
   }
 }
 
@@ -73,6 +81,15 @@
 
   .animate-pulse-glow {
     animation: pulseGlow 2.5s infinite;
+  }
+  
+  /* Sombra de texto para melhorar a legibilidade sobre a imagem de fundo */
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8), 0 8px 16px rgba(0, 0, 0, 0.5);
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
   }
 }
 

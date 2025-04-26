@@ -29,8 +29,8 @@ const languageRules = [
 
 const RulesSection = () => {
   return (
-    <section id="regras" className="section-container rounded-xl p-6 md:p-10 animate-fade-in-up shadow-xl">
-      <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Rules / Regras / Reglas</h2>
+    <section id="regras" className="section-container rounded-xl p-6 md:p-10 animate-fade-in-up shadow-2xl border border-primary/20 backdrop-blur-lg">
+      <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary text-shadow">Rules / Regras / Reglas</h2>
       <p className="text-lg text-gray-200 mb-8">Confira as regras completas do servidor em seu idioma preferido:</p>
       
       <div className="grid md:grid-cols-3 gap-6">
@@ -40,10 +40,10 @@ const RulesSection = () => {
             href={rule.link} 
             target="_blank" 
             rel="noreferrer" 
-            className="block bg-dark-overlay hover:bg-dark-surface p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl border-l-4 border-primary group"
+            className="block bg-black/50 hover:bg-black/70 p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl border-l-4 border-primary group hover:scale-105"
           >
             <div className="flex items-center mb-4">
-              <img src={rule.flag} alt={rule.flagAlt} className="w-8 h-6 mr-3" />
+              <img src={rule.flag} alt={rule.flagAlt} className="w-8 h-6 mr-3 shadow-md" />
               <h3 className="text-xl font-semibold">{rule.language}</h3>
             </div>
             <p className="text-gray-300 mb-4">{rule.description}</p>
@@ -53,6 +53,13 @@ const RulesSection = () => {
             </span>
           </a>
         ))}
+      </div>
+      
+      <div className="bg-black/40 p-6 rounded-lg mt-8 border border-red-500/30">
+        <h3 className="text-xl font-semibold text-red-400 mb-2">⚠️ Lembre-se</h3>
+        <p className="text-gray-300">
+          O cumprimento das regras é essencial para manter nossa comunidade saudável e a experiência de jogo agradável para todos. Jogadores que desrespeitarem as regras podem ser sujeitos a penalidades.
+        </p>
       </div>
     </section>
   );

@@ -11,8 +11,15 @@ import ScrollToTop from "@/components/ScrollToTop";
 function App() {
   return (
     <div className="min-h-screen font-sans text-white antialiased bg-background relative">
+      {/* Imagem de fundo principal com overlay escuro */}
       <div className="fixed inset-0 bg-cover bg-center bg-no-repeat bg-fixed -z-10" 
-           style={{ backgroundImage: "url('https://cdn.cloudflare.steamstatic.com/steam/apps/376210/ss_50a25404567943c9488fc06301915977b6b4e0a4.1920x1080.jpg')" }} />
+           style={{ 
+             backgroundImage: "url('https://cdn.cloudflare.steamstatic.com/steam/apps/376210/ss_e700ec846b56ef68930ad0b16288b321e2889e1e.1920x1080.jpg')",
+             backgroundPosition: "center 25%" 
+           }} />
+      
+      {/* Overlay gradiente para melhorar a legibilidade do texto */}
+      <div className="fixed inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80 -z-10" />
       
       <Hero />
 
