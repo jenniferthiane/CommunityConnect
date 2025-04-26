@@ -1,13 +1,13 @@
-import Hero from "@/components/Hero";
-import AboutSection from "@/components/AboutSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import GallerySection from "@/components/GallerySection";
-import RulesSection from "@/components/RulesSection";
-import JoinSection from "@/components/JoinSection";
-import FloatingButtons from "@/components/FloatingButtons";
-import Footer from "@/components/Footer";
-import ScrollToTop from "@/components/ScrollToTop";
-import ServerStatus from "@/components/ServerStatus";
+import Hero from "./components/Hero";
+import AboutSection from "./components/AboutSection";
+import TestimonialsSection from "./components/TestimonialsSection";
+import GallerySection from "./components/GallerySection";
+import RulesSection from "./components/RulesSection";
+import JoinSection from "./components/JoinSection";
+import FloatingButtons from "./components/FloatingButtons";
+import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
+import ServerStatus from "./components/ServerStatus";
 
 function App() {
   return (

@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-
 const Hero = () => {
   return (
     <header className="min-h-[calc(100vh-3rem)] flex flex-col justify-center items-center text-center p-6 animate-fade-in relative overflow-hidden">
@@ -14,36 +12,30 @@ const Hero = () => {
         
         {/* Novos botões com Discord e Servidor */}
         <div className="flex flex-wrap gap-5 justify-center">
-          <Button 
-            variant="green" 
-            size="xl"
+          <button 
             onClick={() => document.getElementById('galeria')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-8 py-6 text-lg"
+            className="inline-flex items-center justify-center rounded-md h-12 px-10 text-lg bg-green-600 hover:bg-green-700 text-white font-medium"
           >
             <i className="fas fa-images mr-2"></i>Ver Galeria
-          </Button>
+          </button>
           
-          <Button 
-            variant="white" 
-            size="xl"
-            asChild
-            className="px-8 py-6 text-lg"
+          <a 
+            href="https://legacy.nextlevel.net.br/" 
+            target="_blank" 
+            rel="noreferrer"
+            className="inline-flex items-center justify-center rounded-md h-12 px-10 text-lg bg-white hover:bg-gray-100 text-gray-800 font-medium"
           >
-            <a href="https://legacy.nextlevel.net.br/" target="_blank" rel="noreferrer">
-              <i className="fas fa-server mr-2"></i>Servidor
-            </a>
-          </Button>
+            <i className="fas fa-server mr-2"></i>Servidor
+          </a>
           
-          <Button 
-            variant="discord" 
-            size="xl"
-            asChild
-            className="px-8 py-6 text-lg"
+          <a 
+            href="https://discord.gg/HdG6x29g" 
+            target="_blank" 
+            rel="noreferrer"
+            className="inline-flex items-center justify-center rounded-md h-12 px-10 text-lg bg-[#5865F2] hover:bg-[#4752C4] text-white font-medium"
           >
-            <a href="https://discord.gg/HdG6x29g" target="_blank" rel="noreferrer">
-              <i className="fab fa-discord mr-2"></i>Discord
-            </a>
-          </Button>
+            <i className="fab fa-discord mr-2"></i>Discord
+          </a>
         </div>
       </div>
       

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Badge } from "@/components/ui/badge";
 
 const ServerStatus = () => {
   const [serverStatus, setServerStatus] = useState({
@@ -58,17 +57,17 @@ const ServerStatus = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 bg-[#23272A]/95 backdrop-blur-md z-50 border-b border-[#2A2E33]">
+    <div className="fixed top-0 left-0 right-0 bg-[#23272A]/95 z-50 border-b border-[#2A2E33]">
       <div className="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between">
         <div className="flex items-center space-x-3 flex-wrap">
           <div className="flex items-center">
-            <div className={`h-3 w-3 rounded-full mr-2 ${serverStatus.isOnline ? 'bg-green-500' : 'bg-red-500'} animate-pulse`}></div>
+            <div className={`h-3 w-3 rounded-full mr-2 ${serverStatus.isOnline ? 'bg-green-500' : 'bg-red-500'}`}></div>
             <span className="text-sm font-medium hidden sm:inline text-gray-300">
               Status:
             </span>
-            <Badge variant={serverStatus.isOnline ? 'green' as const : 'destructive'} className="ml-2">
+            <span className={`ml-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${serverStatus.isOnline ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`}>
               {serverStatus.isOnline ? 'Online' : 'Offline'}
-            </Badge>
+            </span>
           </div>
           
           <div className="flex items-center border-l border-gray-700 pl-3">
