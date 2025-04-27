@@ -1,194 +1,1080 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  <title>Next Level Brasil - Junte-se à Aventura!</title>
-  <!-- Font Awesome para ícones -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <!-- Fonte principal -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Adicione aqui os estilos gerais */
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      background-color: #0f172a;
-      color: white;
-    }
-    .text-primary {
-      color: #28a745;
-    }
-    .bg-primary {
-      background-color: #28a745;
-    }
-    .section-container {
-      padding: 2rem;
-      margin: 1rem;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 8px;
-    }
-    .text-shadow {
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-    }
-    .rounded-lg {
-      border-radius: 8px;
-    }
-    .shadow-lg {
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .flex {
-      display: flex;
-    }
-    .justify-between {
-      justify-content: space-between;
-    }
-    .items-center {
-      align-items: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Level Brasil - Servidor de The Isle Legacy</title>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fonte principal -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Variáveis de cores */
+        :root {
+            --primary: #28a745;
+            --primary-dark: #218838;
+            --secondary: #6c757d;
+            --discord: #5865F2;
+            --discord-dark: #4752C4;
+            --dark: #111111;
+        }
+
+        /* Estilos básicos */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #111;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Estilos para links */
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Background e overlay */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/376210/ss_e700ec846b56ef68930ad0b16288b321e2889e1e.1920x1080.jpg');
+            background-size: cover;
+            background-position: center 25%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            z-index: -2;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.5), rgba(0,0,0,0.8));
+            z-index: -1;
+        }
+
+        /* Barra de status do servidor */
+        .server-status {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(35, 39, 42, 0.95);
+            backdrop-filter: blur(4px);
+            z-index: 50;
+            border-bottom: 1px solid #2A2E33;
+        }
+
+        .server-status-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0.5rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .status-items {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-item + .status-item {
+            border-left: 1px solid #3a3a3a;
+            padding-left: 0.75rem;
+        }
+
+        .status-indicator {
+            height: 0.75rem;
+            width: 0.75rem;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            background-color: #28a745;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 9999px;
+            padding: 0.125rem 0.625rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background-color: #28a745;
+            color: white;
+            margin-left: 0.5rem;
+        }
+
+        .status-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #ccc;
+        }
+
+        .ping-good {
+            color: #4ade80;
+        }
+
+        .ping-medium {
+            color: #facc15;
+        }
+
+        .ping-bad {
+            color: #f87171;
+        }
+
+        .server-btn {
+            background-color: #5865F2;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .server-btn:hover {
+            background-color: #4752C4;
+        }
+
+        .server-btn i {
+            margin-right: 0.25rem;
+        }
+
+        .update-time {
+            margin-left: 0.75rem;
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        /* Hero section */
+        .hero {
+            min-height: calc(100vh - 3rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+            padding-top: 3rem;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8), 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            max-width: 36rem;
+            color: #f3f4f6;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+            height: 3rem;
+            padding: 0 2.5rem;
+            font-size: 1.125rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn i {
+            margin-right: 0.5rem;
+        }
+
+        .btn-green {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+
+        .btn-green:hover {
+            background-color: #218838;
+        }
+
+        .btn-white {
+            background-color: white;
+            color: #111;
+            border: none;
+        }
+
+        .btn-white:hover {
+            background-color: #f3f4f6;
+        }
+
+        .btn-discord {
+            background-color: #5865F2;
+            color: white;
+            border: none;
+        }
+
+        .btn-discord:hover {
+            background-color: #4752C4;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            animation: bounce 1s infinite;
+        }
+
+        .scroll-down button {
+            color: white;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            opacity: 0.8;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .scroll-down button:hover {
+            opacity: 1;
+        }
+
+        /* Seções */
+        section {
+            padding: 4rem 1rem;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            text-align: center;
+            max-width: 48rem;
+            margin: 0 auto 3rem;
+            color: #d1d5db;
+        }
+
+        /* Sobre seção */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: rgba(17, 17, 17, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: #28a745;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-text {
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        /* Depoimentos */
+        .testimonials {
+            background-color: rgba(17, 17, 17, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 0.5rem;
+            padding: 2rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            border-left: 4px solid #28a745;
+            padding-left: 1.25rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #e5e7eb;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            margin-right: 0.75rem;
+            object-fit: cover;
+        }
+
+        /* Galeria */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            aspect-ratio: 16/9;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-caption {
+            color: white;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Regras */
+        .rules-container {
+            background-color: rgba(17, 17, 17, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 0.5rem;
+            padding: 2rem;
+        }
+
+        .rules-list {
+            list-style-type: none;
+            counter-reset: rule-counter;
+        }
+
+        .rule-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+            counter-increment: rule-counter;
+        }
+
+        .rule-item::before {
+            content: counter(rule-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #28a745;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .rule-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .rule-text {
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        /* Entre Agora */
+        .join-container {
+            background-color: rgba(17, 17, 17, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .join-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .join-text {
+            color: #d1d5db;
+            margin-bottom: 2rem;
+            max-width: 36rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .join-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0a0a0a;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            color: #9ca3af;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            background-color: #1f1f1f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        .social-link:hover {
+            background-color: #28a745;
+        }
+
+        .copyright {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* Botão de rolar para o topo */
+        .scroll-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background-color: rgba(17, 17, 17, 0.8);
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, opacity 0.3s;
+            opacity: 0;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+            z-index: 40;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .scroll-top:hover {
+            background-color: #333;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Media Queries */
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.25rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.875rem;
+            }
+            
+            .btn {
+                padding: 0 1.5rem;
+            }
+            
+            .status-item:not(:first-child) {
+                display: none;
+            }
+            
+            .server-btn span {
+                display: none;
+            }
+        }
+        
+        @media (min-width: 480px) {
+            .server-btn span.xs-hidden {
+                display: none;
+            }
+        }
+
+        @media (min-width: 640px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .status-label.sm-hidden {
+                display: inline;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .update-time {
+                display: inline;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .feature-card {
+                padding: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header class="min-h-[calc(100vh-3rem)] flex flex-col justify-center items-center text-center p-6 animate-fade-in relative overflow-hidden">
-  <div class="relative z-10">
-    <h1 class="text-5xl md:text-7xl font-bold mb-4 tracking-tight text-shadow-lg">
-      Next Level Brasil
-    </h1>
-    <p class="text-xl md:text-2xl mb-10 max-w-2xl text-gray-200">
-      Entre agora em um mundo jurássico de sobrevivência e emoção!
-    </p>
-    <div class="flex flex-wrap gap-5 justify-center">
-      <button 
-        onclick="document.getElementById('galeria').scrollIntoView({ behavior: 'smooth' })"
-        class="inline-flex items-center justify-center rounded-md h-12 px-10 text-lg bg-green-600 hover:bg-green-700 text-white font-medium"
-      >
-        <i class="fas fa-images mr-2"></i>Ver Galeria
-      </button>
-      <a 
-        href="https://legacy.nextlevel.net.br/" 
-        target="_blank" 
-        rel="noreferrer"
-        class="inline-flex items-center justify-center rounded-md h-12 px-10 text-lg bg-white hover:bg-gray-100 text-gray-800 font-medium"
-      >
-        <i class="fas fa-server mr-2"></i>Servidor
-      </a>
-      <a 
-        href="https://discord.gg/HdG6x29g" 
-        target="_blank" 
-        rel="noreferrer"
-        class="inline-flex items-center justify-center rounded-md h-12 px-10 text-lg bg-[#5865F2] hover:bg-[#4752C4] text-white font-medium"
-      >
-        <i class="fab fa-discord mr-2"></i>Discord
-      </a>
+    <!-- Background com overlay -->
+    <div class="bg-image"></div>
+    <div class="bg-overlay"></div>
+
+    <!-- Barra de status do servidor -->
+    <div class="server-status">
+        <div class="server-status-container">
+            <div class="status-items">
+                <div class="status-item">
+                    <div class="status-indicator"></div>
+                    <span class="status-label sm-hidden">Status:</span>
+                    <span class="status-badge">Online</span>
+                </div>
+                
+                <div class="status-item">
+                    <i class="fas fa-users" style="color: #28a745; font-size: 0.875rem; margin-right: 0.5rem;"></i>
+                    <span class="status-label">78/100 <span class="xs-hidden">jogadores</span></span>
+                </div>
+                
+                <div class="status-item">
+                    <i class="fas fa-wifi" style="color: #28a745; font-size: 0.875rem; margin-right: 0.5rem;"></i>
+                    <span class="status-label">Ping: <span class="ping-good">35 ms</span></span>
+                </div>
+            </div>
+            
+            <div>
+                <button class="server-btn" onclick="window.open('https://legacy.nextlevel.net.br/', '_blank')">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>Acessar Painel</span>
+                    <span class="xs-hidden">Painel</span>
+                </button>
+                
+                <span class="update-time" style="display: none;">Atualizado: 15:42:33</span>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="absolute bottom-8 w-full flex justify-center animate-bounce">
-    <button 
-      class="text-white opacity-80 hover:opacity-100 transition-opacity duration-300"
-      onclick="document.getElementById('sobre').scrollIntoView({ behavior: 'smooth' })"
-    >
-      <i class="fas fa-chevron-down text-3xl"></i>
+
+    <!-- Hero Section -->
+    <header class="hero" id="inicio">
+        <div class="hero-content">
+            <h1 class="hero-title">Next Level Brasil</h1>
+            <p class="hero-subtitle">Entre agora em um mundo jurássico de sobrevivência e emoção!</p>
+            
+            <div class="btn-group">
+                <button class="btn btn-green" onclick="document.getElementById('galeria').scrollIntoView({behavior: 'smooth'})">
+                    <i class="fas fa-images"></i>Ver Galeria
+                </button>
+                
+                <a href="https://legacy.nextlevel.net.br/" target="_blank" rel="noreferrer" class="btn btn-white">
+                    <i class="fas fa-server"></i>Servidor
+                </a>
+                
+                <a href="https://discord.gg/HdG6x29g" target="_blank" rel="noreferrer" class="btn btn-discord">
+                    <i class="fab fa-discord"></i>Discord
+                </a>
+            </div>
+        </div>
+        
+        <div class="scroll-down">
+            <button onclick="document.getElementById('sobre').scrollIntoView({behavior: 'smooth'})">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sobre o Servidor -->
+    <section id="sobre">
+        <div class="container">
+            <h2 class="section-title">Sobre o Servidor</h2>
+            <p class="section-subtitle">Conheça o Next Level Brasil, o melhor servidor brasileiro de The Isle Legacy</p>
+            
+            <div class="about-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-server"></i></div>
+                    <h3 class="feature-title">Servidor Estável</h3>
+                    <p class="feature-text">Nosso servidor conta com uma infraestrutura robusta e administração ativa, garantindo uma experiência de jogo sem interrupções.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h3 class="feature-title">Comunidade Ativa</h3>
+                    <p class="feature-text">Faça parte de uma das maiores comunidades brasileiras de The Isle, com eventos regulares e jogadores ativos todos os dias.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                    <h3 class="feature-title">Regras Balanceadas</h3>
+                    <p class="feature-text">Regras justas que garantem diversão para todos os estilos de jogo, com foco na sobrevivência e interação entre jogadores.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <h3 class="feature-title">Suporte Rápido</h3>
+                    <p class="feature-text">Nossa equipe de administradores está sempre disponível para ajudar com qualquer problema ou dúvida que você possa ter.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depoimentos -->
+    <section id="depoimentos">
+        <div class="container">
+            <h2 class="section-title">O Que Dizem Nossos Jogadores</h2>
+            <p class="section-subtitle">Confira a experiência de quem já faz parte da nossa comunidade</p>
+            
+            <div class="testimonials">
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Melhor servidor brasileiro de The Isle que já joguei. Comunidade acolhedora e staff sempre presente. Recomendo!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/150?img=1" alt="Avatar" class="testimonial-avatar">
+                            <span>RaptorBR</span>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"As regras são justas e os eventos são muito divertidos. Já estou jogando há meses e nunca tive problemas."</p>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/150?img=2" alt="Avatar" class="testimonial-avatar">
+                            <span>DinoHunter</span>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"O servidor é super estável e a comunidade é muito acolhedora. Fiz vários amigos aqui e sempre me divirto muito!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/150?img=3" alt="Avatar" class="testimonial-avatar">
+                            <span>JurassicGirl</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria -->
+    <section id="galeria">
+        <div class="container">
+            <h2 class="section-title">Galeria</h2>
+            <p class="section-subtitle">Veja os melhores momentos capturados em nosso servidor</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/376210/ss_08c772ed98ae140a61e7ea8ad08840bb3d9a9343.1920x1080.jpg" alt="The Isle gameplay" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Predadores à espreita</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/376210/ss_a4f899c1eb20e02f928a3dbc67ed4afd599bf11f.1920x1080.jpg" alt="The Isle gameplay" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Encontro de espécies</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/376210/ss_9be318b5f2fbe33cf8813ea3b38d91e30be121d8.1920x1080.jpg" alt="The Isle gameplay" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Paisagem deslumbrante</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/376210/ss_6fc0da6cf67305ca17cebb97192708b3a8f1de8a.1920x1080.jpg" alt="The Isle gameplay" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Momento de caça</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/376210/ss_f43d633ebabc7dc6857a732f79e8e0dab483ae0e.1920x1080.jpg" alt="The Isle gameplay" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Presas afiadas</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/376210/ss_e700ec846b56ef68930ad0b16288b321e2889e1e.1920x1080.jpg" alt="The Isle gameplay" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Vista panorâmica</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regras -->
+    <section id="regras">
+        <div class="container">
+            <h2 class="section-title">Regras do Servidor</h2>
+            <p class="section-subtitle">Conheça as principais regras para garantir uma boa experiência para todos</p>
+            
+            <div class="rules-container">
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <h3 class="rule-title">Respeito entre jogadores</h3>
+                        <p class="rule-text">Trate todos com respeito. Não será tolerado nenhum tipo de discriminação, assédio ou comportamento tóxico.</p>
+                    </li>
+                    
+                    <li class="rule-item">
+                        <h3 class="rule-title">Sem Mixpacking</h3>
+                        <p class="rule-text">Carnívoros e herbívoros não podem formar grupos juntos. Cada espécie deve respeitar a cadeia alimentar natural.</p>
+                    </li>
+                    
+                    <li class="rule-item">
+                        <h3 class="rule-title">3-Call Rule</h3>
+                        <p class="rule-text">Só é permitido vocalizar 3 vezes em um combate. Isso impede a comunicação excessiva durante caçadas e lutas.</p>
+                    </li>
+                    
+                    <li class="rule-item">
+                        <h3 class="rule-title">Sem Combat Logging</h3>
+                        <p class="rule-text">Desconectar durante um combate para evitar a morte é proibido e resultará em punições.</p>
+                    </li>
+                    
+                    <li class="rule-item">
+                        <h3 class="rule-title">KOS (Kill On Sight)</h3>
+                        <p class="rule-text">KOS é permitido, mas incentivamos a interação entre jogadores para criar situações mais interessantes.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Entre Agora -->
+    <section id="entrar">
+        <div class="container">
+            <h2 class="section-title">Entre Agora no Servidor</h2>
+            <p class="section-subtitle">Junte-se a centenas de jogadores em uma experiência de sobrevivência jurássica única</p>
+            
+            <div class="join-container">
+                <h3 class="join-title">Pronto para a aventura?</h3>
+                <p class="join-text">The Isle Legacy é um jogo de sobrevivência onde você vive como um dinossauro em um ecossistema perigoso e imprevisível. No servidor Next Level Brasil, você encontrará uma comunidade ativa e uma equipe de administração dedicada.</p>
+                
+                <div class="join-buttons">
+                    <a href="https://store.steampowered.com/app/376210/The_Isle/" target="_blank" class="btn btn-green">
+                        <i class="fab fa-steam"></i> Comprar na Steam
+                    </a>
+                    
+                    <a href="https://discord.gg/HdG6x29g" target="_blank" class="btn btn-discord">
+                        <i class="fab fa-discord"></i> Entrar no Discord
+                    </a>
+                    
+                    <a href="https://legacy.nextlevel.net.br/" target="_blank" class="btn btn-white">
+                        <i class="fas fa-server"></i> Acessar o Painel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Next Level Brasil</div>
+            <p class="footer-text">A melhor experiência brasileira de The Isle Legacy</p>
+            
+            <div class="social-links">
+                <a href="https://discord.gg/HdG6x29g" target="_blank" class="social-link">
+                    <i class="fab fa-discord"></i>
+                </a>
+                <a href="#" target="_blank" class="social-link">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" target="_blank" class="social-link">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#" target="_blank" class="social-link">
+                    <i class="fab fa-twitch"></i>
+                </a>
+            </div>
+            
+            <p class="copyright">&copy; 2023 Next Level Brasil. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botão de voltar ao topo -->
+    <button id="scrollTopBtn" class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
     </button>
-  </div>
-</header>
-<section id="sobre" class="section-container rounded-xl p-6 md:p-10 animate-fade-in-up shadow-2xl border border-primary/20 backdrop-blur-lg">
-  <h2 class="text-3xl md:text-4xl font-bold mb-6 text-primary text-shadow">Sobre o Jogo</h2>
-  <div class="space-y-5 text-gray-200">
-    <p class="text-lg leading-relaxed">
-      <strong class="text-white">The Isle: Legacy</strong> é um jogo de sobrevivência onde você vive como um dinossauro em um mundo selvagem e perigoso. No servidor Next Level Brasil, a experiência jurássica atinge um novo patamar!
-    </p>
-    <p class="text-lg leading-relaxed">
-      Nosso servidor oferece eventos semanais, balanceamento justo e uma comunidade acolhedora pronta para te ajudar a evoluir seu dinossauro e enfrentar os desafios da ilha.
-    </p>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-      <div class="flex items-center bg-black/50 p-5 rounded-lg border-l-4 border-primary hover:bg-black/60 transition-all duration-300">
-        <i class="fas fa-users text-primary text-2xl mr-3"></i>
-        <div>
-          <h3 class="font-semibold">Comunidade Ativa</h3>
-          <p class="text-sm text-gray-300">Jogadores online todos os dias</p>
-        </div>
-      </div>
-      <div class="flex items-center bg-black/50 p-5 rounded-lg border-l-4 border-primary hover:bg-black/60 transition-all duration-300">
-        <i class="fas fa-calendar-alt text-primary text-2xl mr-3"></i>
-        <div>
-          <h3 class="font-semibold">Eventos Semanais</h3>
-          <p class="text-sm text-gray-300">Participe de desafios exclusivos</p>
-        </div>
-      </div>
-      <div class="flex items-center bg-black/50 p-5 rounded-lg border-l-4 border-primary hover:bg-black/60 transition-all duration-300">
-        <i class="fas fa-headset text-primary text-2xl mr-3"></i>
-        <div>
-          <h3 class="font-semibold">Suporte Ativo</h3>
-          <p class="text-sm text-gray-300">Equipe pronta para ajudar</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Seção Depoimentos -->
-<section id="depoimentos" class="section-container rounded-xl p-6 md:p-10 animate-fade-in-up shadow-2xl border border-primary/20 backdrop-blur-lg">
-  <h2 class="text-3xl md:text-4xl font-bold mb-6 text-primary text-shadow">Depoimentos da Comunidade</h2>
-  <div class="space-y-5">
-    <blockquote class="bg-black/50 p-5 rounded-lg border-l-4 border-primary">
-      <p class="text-lg text-gray-300">
-        "O Next Level Brasil é o melhor servidor que já joguei! A comunidade é incrível e os eventos são sempre emocionantes."
-      </p>
-      <footer class="mt-3 text-sm text-gray-400">- Jogador Anônimo</footer>
-    </blockquote>
-    <blockquote class="bg-black/50 p-5 rounded-lg border-l-4 border-primary">
-      <p class="text-lg text-gray-300">
-        "A equipe de suporte é super prestativa e sempre resolve os problemas rapidamente. Recomendo a todos!"
-      </p>
-      <footer class="mt-3 text-sm text-gray-400">- DinoFã123</footer>
-    </blockquote>
-    <blockquote class="bg-black/50 p-5 rounded-lg border-l-4 border-primary">
-      <p class="text-lg text-gray-300">
-        "Adoro os eventos semanais e a organização do servidor. É realmente uma experiência única!"
-      </p>
-      <footer class="mt-3 text-sm text-gray-400">- RaptorMaster</footer>
-    </blockquote>
-  </div>
-</section>
-<!-- Seção Galeria -->
-<section id="galeria" class="section-container rounded-xl p-6 md:p-10 animate-fade-in-up shadow-2xl border border-primary/20 backdrop-blur-lg">
-  <h2 class="text-3xl md:text-4xl font-bold mb-6 text-primary text-shadow">Galeria</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-    <img src="https://via.placeholder.com/300x200" alt="Imagem 1" class="rounded-lg shadow-lg">
-    <img src="https://via.placeholder.com/300x200" alt="Imagem 2" class="rounded-lg shadow-lg">
-    <img src="https://via.placeholder.com/300x200" alt="Imagem 3" class="rounded-lg shadow-lg">
-    <img src="https://via.placeholder.com/300x200" alt="Imagem 4" class="rounded-lg shadow-lg">
-    <img src="https://via.placeholder.com/300x200" alt="Imagem 5" class="rounded-lg shadow-lg">
-    <img src="https://via.placeholder.com/300x200" alt="Imagem 6" class="rounded-lg shadow-lg">
-  </div>
-</section>
-<!-- Seção Regras -->
-<section id="regras" class="section-container rounded-xl p-6 md:p-10 animate-fade-in-up shadow-2xl border border-primary/20 backdrop-blur-lg">
-  <h2 class="text-3xl md:text-4xl font-bold mb-6 text-primary text-shadow">Regras do Servidor</h2>
-  <ul class="list-disc list-inside text-gray-300 space-y-4">
-    <li>Respeite todos os jogadores e a equipe administrativa.</li>
-    <li>Não use cheats ou qualquer programa que ofereça vantagens injustas.</li>
-    <li>Evite linguagem ofensiva ou desrespeitosa no chat.</li>
-    <li>Participe dos eventos e contribua para manter o ambiente divertido.</li>
-    <li>Relate problemas ou jogadores tóxicos à equipe de suporte.</li>
-  </ul>
-</section>
-<!-- Seção Junte-se -->
-<section id="junte-se" class="section-container rounded-xl p-6 md:p-10 animate-fade-in-up shadow-2xl border border-primary/20 backdrop-blur-lg bg-secondary">
-  <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white text-shadow">Junte-se à Comunidade</h2>
-  <p class="text-lg text-gray-200 leading-relaxed">
-    Não perca mais tempo! Entre agora no servidor Next Level Brasil e viva a experiência jurássica definitiva. Conecte-se com outros jogadores, participe de eventos e aproveite ao máximo o mundo de The Isle.
-  </p>
-  <div class="mt-6 flex justify-center space-x-4">
-    <a href="https://discord.gg/HdG6x29g" target="_blank" class="btn-discord inline-block px-6 py-3 text-lg font-medium rounded-lg">
-      <i class="fab fa-discord mr-2"></i>Entrar no Discord
-    </a>
-    <a href="https://legacy.nextlevel.net.br/" target="_blank" class="btn-green inline-block px-6 py-3 text-lg font-medium rounded-lg">
-      <i class="fas fa-server mr-2"></i>Conectar ao Servidor
-    </a>
-  </div>
-</section>
-<!-- Rodapé -->
-<footer class="py-6 bg-black/80 text-center text-gray-400 text-sm">
-  <p>&copy; 2025 Next Level Brasil. Todos os direitos reservados.</p>
-  <p>Este site é uma homenagem à comunidade de The Isle: Legacy.</p>
-</footer>
+
+    <!-- Scripts -->
+    <script>
+        // Dados do servidor (simulados)
+        let serverStatus = {
+            isOnline: true,
+            playersOnline: 78,
+            maxPlayers: 100,
+            ping: 35,
+            lastUpdated: new Date()
+        };
+
+        // Atualizar informações do servidor a cada 15 segundos
+        setInterval(function() {
+            // Simular mudanças nos jogadores online
+            const randomPlayerChange = Math.floor(Math.random() * 5) - 2; // -2 a +2 jogadores
+            const newPlayersOnline = Math.max(1, Math.min(serverStatus.maxPlayers, serverStatus.playersOnline + randomPlayerChange));
+            
+            // Simular mudanças no ping
+            const pingVariation = Math.floor(Math.random() * 15) - 5; // -5 a +10 ms
+            const newPing = Math.max(10, Math.min(150, serverStatus.ping + pingVariation));
+            
+            // 99% chance de estar online
+            const newOnlineStatus = Math.random() > 0.01;
+            
+            // Atualizar status
+            serverStatus = {
+                isOnline: newOnlineStatus,
+                playersOnline: newOnlineStatus ? newPlayersOnline : 0,
+                maxPlayers: serverStatus.maxPlayers,
+                ping: newOnlineStatus ? newPing : 0,
+                lastUpdated: new Date()
+            };
+            
+            // Atualizar elementos na página
+            updateServerStatusDisplay();
+        }, 15000);
+
+        // Função para atualizar a exibição do status do servidor
+        function updateServerStatusDisplay() {
+            // Status indicator
+            const statusIndicator = document.querySelector('.status-indicator');
+            statusIndicator.style.backgroundColor = serverStatus.isOnline ? '#28a745' : '#dc3545';
+            
+            // Status badge
+            const statusBadge = document.querySelector('.status-badge');
+            statusBadge.textContent = serverStatus.isOnline ? 'Online' : 'Offline';
+            statusBadge.style.backgroundColor = serverStatus.isOnline ? '#28a745' : '#dc3545';
+            
+            // Players count
+            const playersText = document.querySelectorAll('.status-item')[1].querySelector('.status-label');
+            playersText.innerHTML = `${serverStatus.playersOnline}/${serverStatus.maxPlayers} <span class="xs-hidden">jogadores</span>`;
+            
+            // Ping
+            const pingText = document.querySelectorAll('.status-item')[2].querySelector('.status-label');
+            const pingValue = pingText.querySelector('span');
+            pingValue.textContent = `${serverStatus.ping} ms`;
+            
+            // Set ping color
+            pingValue.className = '';
+            if (serverStatus.ping < 50) {
+                pingValue.classList.add('ping-good');
+            } else if (serverStatus.ping < 100) {
+                pingValue.classList.add('ping-medium');
+            } else {
+                pingValue.classList.add('ping-bad');
+            }
+            
+            // Update time
+            const updateTime = document.querySelector('.update-time');
+            updateTime.textContent = `Atualizado: ${formatTime(serverStatus.lastUpdated)}`;
+        }
+
+        // Formatar hora
+        function formatTime(date) {
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+            return `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Mostrar/esconder botão de voltar ao topo
+        window.addEventListener('scroll', function() {
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Função para voltar ao topo
+        document.getElementById('scrollTopBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Mostrar a hora de atualização em telas médias e maiores
+        if (window.innerWidth >= 768) {
+            document.querySelector('.update-time').style.display = 'inline';
+        }
+
+        // Inicializar a exibição do status
+        updateServerStatusDisplay();
+    </script>
+</body>
+</html>
