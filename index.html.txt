@@ -1,0 +1,620 @@
+## Next Level Brasil - Site Promocional
+
+### client/index.html
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Next Level Brasil - Servidor de The Isle Legacy</title>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Fonte principal -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Next Level Brasil - O melhor servidor brasileiro de The Isle Legacy. Venha viver a experiência jurássica com a nossa comunidade!" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+```
+
+### client/src/main.tsx
+```tsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx'
+import './index.css'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from './lib/queryClient.ts'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  </React.StrictMode>,
+)
+```
+
+### client/src/index.css
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222.2 47.4% 11.2%;
+    --foreground: 213 31% 91%;
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 210 40% 98%;
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 216 34% 17%;
+    --radius: 0.5rem;
+    --sidebar-background: 224 71% 4%;
+    --sidebar-foreground: 213 31% 91%;
+    --sidebar-primary: 210 40% 98%;
+    --sidebar-primary-foreground: 222.2 47.4% 1.2%;
+    --sidebar-accent: 216 34% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 216 34% 17%;
+    --sidebar-ring: 216 34% 17%;
+    --chart-1: 227.2 69.2% 61.2%;
+    --chart-2: 167.2 75.2% 42.2%;
+    --chart-3: 40.2 95.2% 55.2%;
+    --chart-4: 303.2 73.2% 60.2%;
+    --chart-5: 198.2 93.2% 59.2%;
+  }
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #0f172a;
+}
+
+/* Estilo para o efeito de sombra de texto */
+.text-shadow-lg {
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.text-shadow-sm {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out;
+}
+
+/* Variação dos botões */
+@layer components {
+  .btn-green {
+    @apply bg-green-600 hover:bg-green-700 text-white;
+  }
+  
+  .btn-discord {
+    @apply bg-[#5865F2] hover:bg-[#4752C4] text-white;
+  }
+  
+  .btn-white {
+    @apply bg-white hover:bg-gray-100 text-gray-800;
+  }
+}
+```
+
+### client/src/App.tsx
+```tsx
+import Hero from "@/components/Hero";
+import AboutSection from "@/components/AboutSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import GallerySection from "@/components/GallerySection";
+import RulesSection from "@/components/RulesSection";
+import JoinSection from "@/components/JoinSection";
+import FloatingButtons from "@/components/FloatingButtons";
+import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
+import ServerStatus from "@/components/ServerStatus";
+
+function App() {
+  return (
+    <div className="min-h-screen font-sans text-white antialiased bg-background relative">
+      {/* Imagem de fundo principal com overlay escuro */}
+      <div className="fixed inset-0 bg-cover bg-center bg-no-repeat bg-fixed -z-10" 
+           style={{ 
+             backgroundImage: "url('https://cdn.cloudflare.steamstatic.com/steam/apps/376210/ss_e700ec846b56ef68930ad0b16288b321e2889e1e.1920x1080.jpg')",
+             backgroundPosition: "center 25%" 
+           }} />
+      
+      {/* Overlay gradiente para melhorar a legibilidade do texto */}
+      <div className="fixed inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80 -z-10" />
+      
+      {/* Barra de status do servidor */}
+      <ServerStatus />
+      
+      {/* Adicionado padding-top para compensar a barra fixa no topo */}
+      <div className="pt-12">
+        <Hero />
+
+        <main className="max-w-7xl mx-auto px-4 py-8 space-y-16">
+          <AboutSection />
+          <TestimonialsSection />
+          <GallerySection />
+          <RulesSection />
+          <JoinSection />
+        </main>
+
+        <FloatingButtons />
+        <ScrollToTop />
+        <Footer />
+      </div>
+    </div>
+  );
+}
+
+export default App;
+```
+
+### client/src/components/ServerStatus.tsx
+```tsx
+import { useState, useEffect } from 'react';
+import { Badge } from "@/components/ui/badge";
+
+const ServerStatus = () => {
+  const [serverStatus, setServerStatus] = useState({
+    isOnline: true,
+    playersOnline: 78,
+    maxPlayers: 100,
+    ping: 35,
+    lastUpdated: new Date()
+  });
+  
+  // Simular atualizações periódicas do status do servidor
+  useEffect(() => {
+    const updateTimer = setInterval(() => {
+      // Valores simulados
+      const randomPlayerChange = Math.floor(Math.random() * 5) - 2; // -2 a +2 jogadores
+      const newPlayersOnline = Math.max(
+        1, 
+        Math.min(
+          serverStatus.maxPlayers, 
+          serverStatus.playersOnline + randomPlayerChange
+        )
+      );
+      
+      const pingVariation = Math.floor(Math.random() * 15) - 5; // -5 a +10 ms
+      const newPing = Math.max(10, Math.min(150, serverStatus.ping + pingVariation));
+      
+      // 99% chance de estar online
+      const newOnlineStatus = Math.random() > 0.01;
+      
+      setServerStatus({
+        isOnline: newOnlineStatus,
+        playersOnline: newOnlineStatus ? newPlayersOnline : 0,
+        maxPlayers: serverStatus.maxPlayers,
+        ping: newOnlineStatus ? newPing : 0,
+        lastUpdated: new Date()
+      });
+    }, 15000); // Atualiza a cada 15 segundos
+    
+    return () => clearInterval(updateTimer);
+  }, [serverStatus]);
+  
+  // Determinar cor do ping
+  const getPingColor = (ping: number) => {
+    if (ping < 50) return 'text-green-400';
+    if (ping < 100) return 'text-yellow-400';
+    return 'text-red-400';
+  };
+  
+  // Formatar horário da última atualização
+  const formatLastUpdated = (date: Date) => {
+    return date.toLocaleTimeString('pt-BR', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  };
+
+  return (
+    <div className="fixed top-0 left-0 right-0 bg-[#23272A]/95 backdrop-blur-md z-50 border-b border-[#2A2E33]">
+      <div className="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between">
+        <div className="flex items-center space-x-3 flex-wrap">
+          <div className="flex items-center">
+            <div className={`h-3 w-3 rounded-full mr-2 ${serverStatus.isOnline ? 'bg-green-500' : 'bg-red-500'} animate-pulse`}></div>
+            <span className="text-sm font-medium hidden sm:inline text-gray-300">
+              Status:
+            </span>
+            <Badge variant={serverStatus.isOnline ? 'green' as const : 'destructive'} className="ml-2">
+              {serverStatus.isOnline ? 'Online' : 'Offline'}
+            </Badge>
+          </div>
+          
+          <div className="flex items-center border-l border-gray-700 pl-3">
+            <i className="fas fa-users text-[#28a745] text-sm mr-2"></i>
+            <span className="text-sm text-gray-300">
+              {serverStatus.playersOnline}/{serverStatus.maxPlayers} <span className="hidden xs:inline">jogadores</span>
+            </span>
+          </div>
+          
+          <div className="hidden sm:flex items-center border-l border-gray-700 pl-3">
+            <i className="fas fa-wifi text-[#28a745] text-sm mr-2"></i>
+            <span className="text-sm text-gray-300">
+              Ping: <span className={getPingColor(serverStatus.ping)}>{serverStatus.ping} ms</span>
+            </span>
+          </div>
+        </div>
+        
+        <div className="flex items-center ml-auto">
+          <button 
+            onClick={() => window.open('https://legacy.nextlevel.net.br/', '_blank')}
+            className="bg-[#5865F2] hover:bg-[#4752C4] text-white text-xs px-3 py-1 rounded-md transition-colors duration-200 flex items-center shadow-sm"
+          >
+            <i className="fas fa-external-link-alt mr-1"></i>
+            <span className="hidden xs:inline">Acessar Painel</span>
+            <span className="xs:hidden">Painel</span>
+          </button>
+          
+          <span className="ml-3 text-xs text-gray-400 hidden md:inline">
+            Atualizado: {formatLastUpdated(serverStatus.lastUpdated)}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ServerStatus;
+```
+
+### client/src/components/Hero.tsx
+```tsx
+import { Button } from "@/components/ui/button";
+
+const Hero = () => {
+  return (
+    <header className="min-h-[calc(100vh-3rem)] flex flex-col justify-center items-center text-center p-6 animate-fade-in relative overflow-hidden">
+      {/* Container com efeito de brilho e neblina para o título */}
+      <div className="relative z-10">
+        <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-tight text-shadow-lg">
+          Next Level Brasil
+        </h1>
+        <p className="text-xl md:text-2xl mb-10 max-w-2xl text-gray-200">
+          Entre agora em um mundo jurássico de sobrevivência e emoção!
+        </p>
+        
+        {/* Novos botões com Discord e Servidor */}
+        <div className="flex flex-wrap gap-5 justify-center">
+          <Button 
+            variant="green" 
+            size="xl"
+            onClick={() => document.getElementById('galeria')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-8 py-6 text-lg"
+          >
+            <i className="fas fa-images mr-2"></i>Ver Galeria
+          </Button>
+          
+          <Button 
+            variant="white" 
+            size="xl"
+            asChild
+            className="px-8 py-6 text-lg"
+          >
+            <a href="https://legacy.nextlevel.net.br/" target="_blank" rel="noreferrer">
+              <i className="fas fa-server mr-2"></i>Servidor
+            </a>
+          </Button>
+          
+          <Button 
+            variant="discord" 
+            size="xl"
+            asChild
+            className="px-8 py-6 text-lg"
+          >
+            <a href="https://discord.gg/HdG6x29g" target="_blank" rel="noreferrer">
+              <i className="fab fa-discord mr-2"></i>Discord
+            </a>
+          </Button>
+        </div>
+      </div>
+      
+      {/* Seta para baixo */}
+      <div className="absolute bottom-8 w-full flex justify-center animate-bounce">
+        <button 
+          className="text-white opacity-80 hover:opacity-100 transition-opacity duration-300"
+          onClick={() => document.getElementById('sobre')?.scrollIntoView({ behavior: 'smooth' })}
+        >
+          <i className="fas fa-chevron-down text-3xl"></i>
+        </button>
+      </div>
+    </header>
+  );
+};
+
+export default Hero;
+```
+
+### client/src/components/ui/badge.tsx
+```tsx
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const badgeVariants = cva(
+  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  {
+    variants: {
+      variant: {
+        default:
+          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
+        secondary:
+          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        destructive:
+          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+        green:
+          "border-transparent bg-[#28a745] text-white hover:bg-[#218838]",
+        outline: "text-foreground",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+)
+
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
+
+function Badge({ className, variant, ...props }: BadgeProps) {
+  return (
+    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+  )
+}
+
+export { Badge, badgeVariants }
+```
+
+### client/src/components/FloatingButtons.tsx (removido)
+```tsx
+const FloatingButtons = () => {
+  return null; // Não renderiza nada
+};
+
+export default FloatingButtons;
+```
+
+### client/src/components/ScrollToTop.tsx
+```tsx
+import { useState, useEffect } from 'react';
+
+const ScrollToTop = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Mostrar o botão quando o usuário rolar para baixo
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.scrollY > 500) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', toggleVisibility);
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
+
+  // Rolar para o topo quando o botão for clicado
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  return (
+    <>
+      {isVisible && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 bg-gray-800/80 hover:bg-gray-700 w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg z-40 transition-all duration-300 backdrop-blur-sm"
+          aria-label="Voltar ao topo"
+        >
+          <i className="fas fa-arrow-up"></i>
+        </button>
+      )}
+    </>
+  );
+};
+
+export default ScrollToTop;
+```
+
+### client/src/components/ui/button.tsx (exemplo de como foi modificado para adicionar variantes)
+```tsx
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+        green: "bg-green-600 hover:bg-green-700 text-white",
+        discord: "bg-[#5865F2] hover:bg-[#4752C4] text-white",
+        white: "bg-white hover:bg-gray-100 text-gray-800",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        xl: "h-12 rounded-md px-10 text-base",
+        icon: "h-10 w-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Button.displayName = "Button"
+
+export { Button, buttonVariants }
+```
+
+### tailwind.config.ts
+```typescript
+import type { Config } from "tailwindcss";
+
+export default {
+  darkMode: ["class"],
+  content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    screens: {
+      'xs': '480px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
+    extend: {
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      colors: {
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        chart: {
+          "1": "hsl(var(--chart-1))",
+          "2": "hsl(var(--chart-2))",
+          "3": "hsl(var(--chart-3))",
+          "4": "hsl(var(--chart-4))",
+          "5": "hsl(var(--chart-5))",
+        },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
+      },
+      keyframes: {
+        "accordion-down": {
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
+        },
+        "accordion-up": {
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+} satisfies Config;
+```
