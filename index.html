@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+/<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -520,6 +520,57 @@
             gap: 1rem;
             justify-content: center;
         }
+        
+        /* Estilos para seção de links para regras */
+        .rules-buttons {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .rules-links-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        .rules-links-subtitle {
+            text-align: center;
+            color: #d1d5db;
+            margin-bottom: 2rem;
+        }
+        
+        .rules-buttons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .rules-category {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .rules-category-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        .rules-btn {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            height: auto;
+        }
 
         /* Footer */
         footer {
@@ -909,6 +960,50 @@
                         <p class="rule-text">KOS é permitido, mas incentivamos a interação entre jogadores para criar situações mais interessantes.</p>
                     </li>
                 </ul>
+
+                <div class="rules-buttons">
+                    <h3 class="rules-links-title">Regras Completas no Discord</h3>
+                    <p class="rules-links-subtitle">Clique nos botões abaixo para acessar as regras detalhadas no nosso servidor Discord</p>
+                    
+                    <div class="rules-buttons-container">
+                        <div class="rules-category">
+                            <h4 class="rules-category-title">Regras do Discord</h4>
+                            <a href="https://discord.com/channels/605389794641707018/1336175551181750332" target="_blank" class="btn btn-discord rules-btn">
+                                <i class="fab fa-discord"></i> Ver Regras do Discord
+                            </a>
+                        </div>
+                        
+                        <div class="rules-category">
+                            <h4 class="rules-category-title">Regras de The Isle (Português)</h4>
+                            <a href="https://discord.com/channels/605389794641707018/1362449779375734914" target="_blank" class="btn btn-discord rules-btn">
+                                <i class="fas fa-scroll"></i> Regras do Servidor
+                            </a>
+                            <a href="https://discord.com/channels/605389794641707018/1362453025431621662" target="_blank" class="btn btn-discord rules-btn">
+                                <i class="fas fa-users"></i> Limites de Grupo
+                            </a>
+                        </div>
+                        
+                        <div class="rules-category">
+                            <h4 class="rules-category-title">Reglas de The Isle (Español)</h4>
+                            <a href="https://discord.com/channels/605389794641707018/1362446644947321112" target="_blank" class="btn btn-discord rules-btn">
+                                <i class="fas fa-scroll"></i> Reglas del Servidor
+                            </a>
+                            <a href="https://discord.com/channels/605389794641707018/1362453730389393469" target="_blank" class="btn btn-discord rules-btn">
+                                <i class="fas fa-users"></i> Límites de Grupo
+                            </a>
+                        </div>
+                        
+                        <div class="rules-category">
+                            <h4 class="rules-category-title">The Isle Rules (English)</h4>
+                            <a href="https://discord.com/channels/605389794641707018/1362446756582785135" target="_blank" class="btn btn-discord rules-btn">
+                                <i class="fas fa-scroll"></i> Server Rules
+                            </a>
+                            <a href="https://discord.com/channels/605389794641707018/1362453554266374215" target="_blank" class="btn btn-discord rules-btn">
+                                <i class="fas fa-users"></i> Group Limits
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
