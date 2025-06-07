@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Next Level Brasil - Servidor de The Isle Legacy</title>
+    <!-- Font Awesome para ícones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Fonte principal -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <!-- CSS separado -->
+    <link href="style.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link href="favicon.ico" rel="icon" type="image/x-icon">
+    <!-- Meta CLARITY -->
+     <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "rv3407q21o");
+</script>
+</head>
+<body>
+    <!-- Background com overlay -->
+    <div class="bg-image"></div>
+    <div class="bg-overlay"></div>
+    <!-- Barra de status do servidor -->
+    <div class="server-status">
+    <div class="server-status-container" id="serverStatusContainer">
+        <div class="status-items">
+            <div class="status-item">
+                <div class="status-indicator" id="statusIndicator"></div>
+                <span class="status-label sm-hidden">Status:</span>
+                <span class="status-badge" id="statusBadge">Carregando...</span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-users" style="color: #28a745; font-size: 0.875rem; margin-right: 0.5rem;"></i>
+                <span class="status-label" id="playersCount">--/-- <span class="xs-hidden">jogadores</span></span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-globe-americas" style="color: #FFD600; font-size: 0.875rem; margin-right: 0.5rem;"></i>
+                <span class="status-label" id="serverMap">Mapa: --</span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-clock" style="color: #FFD600; font-size: 0.875rem; margin-right: 0.5rem;"></i>
+                <span class="status-label" id="lastUpdate">Atualizando...</span>
+            </div>
+            
+        </div>
+        <div>
+            <button class="server-btn" onclick="window.open('https://nextlevel.raptorcloud.com.br/', '_blank')">
+                <i class="fas fa-external-link-alt"></i>
+                <span>Acessar Painel</span>
+                <span class="xs-hidden">Painel</span>
+            </button>
+            <span class="update-time" id="apiUpdateTime" style="display: none;"></span>
+        </div>
+    </div>
+</div>
+    <!-- Hero Section -->
+    <header class="hero" id="inicio">
+        <div class="hero-content">
+            <h1 class="hero-title">Next Level Brasil</h1>
+            <p class="hero-subtitle">Entre agora em um mundo jurássico de sobrevivência e emoção!</p>
+            <div class="btn-group">
+                <button class="btn btn-green"
+                    onclick="document.getElementById('galeria').scrollIntoView({behavior: 'smooth'})">
+                    <i class="fas fa-images"></i>Ver Galeria
+                </button>
+                <a class="btn btn-white" href="https://nextlevel.raptorcloud.com.br/" rel="noreferrer" target="_blank">
+                    <i class="fas fa-server"></i>Servidor
+                </a>
+                <a class="btn btn-discord" href="https://discord.gg/nextlevelbrasil" rel="noreferrer" target="_blank">
+                    <i class="fab fa-discord"></i>Discord
+                </a>
+            </div>
+        </div>
+        <div class="scroll-down">
+            <button onclick="document.getElementById('sobre').scrollIntoView({behavior: 'smooth'})">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </header>
+    <!-- Depoimentos -->
+    <section id="depoimentos">
+        <div class="container">
+            <h2 class="section-title">O Que Dizem Nossos Jogadores</h2>
+            <p class="section-subtitle">Confira a experiência de quem já faz parte da nossa comunidade</p>
+            <div class="testimonials">
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Quando entrei no Nextlevel parecia apenas um serve comum, mais logo
+                            vi a compaixão determinação e companheiro que ali habitava, assim ele se destacou, cresceu,
+                            e esta indo além, acredito que tenham que melhorar mais se, se importam com isso e o que faz
+                            ele ser o melhor #Evolução constante.</p>
+                        <div class="testimonial-author">
+                            <img alt="Avatar" class="testimonial-avatar" src="https://i.pravatar.cc/150?img=1">
+                            <span>Nh</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Eu vim do prelude né então o next level comparado a ele é melhor na
+                            minha opinião. O pessoal do serve é muito gente boa a maioria se respeita os eventos são
+                            bons, os adms e o suportes são maravilhosos também</p>
+                        <div class="testimonial-author">
+                            <img alt="Avatar" class="testimonial-avatar" src="https://i.pravatar.cc/150?img=2">
+                            <span>XxBijuxX</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"O Next Level e um servidor muito bom, bem hosteado revolucionario
+                            com o lançamento dos dinossauros novos e as regras do server q são bem balanceadas,o server
+                            e otimo e tem tudo pra ser o maior server br de the isle."</p>
+                        <div class="testimonial-author">
+                            <img alt="Avatar" class="testimonial-avatar" src="https://i.pravatar.cc/150?img=3">
+                            <span>RAMBO98</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="update-section floating-section">
+        <div class="container">
+            <h2 class="section-title">Atualizações &amp; Novidades</h2>
+            <div class="card-row">
+                <div class="update-card">
+                    <p data-edit="atualizacao-4"></p>
+                    <span class="update-label">Atualizado por Staff</span>
+                </div>
+                <div class="update-card">
+                    <p data-edit="atualizacao-5"></p>
+                    <span class="update-label">Evento especial</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria -->
+    <section id="galeria">
+        <div class="container">
+            <h2 class="section-title">Galeria</h2>
+            <p class="section-subtitle">Veja os melhores momentos capturados em nosso servidor</p>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img alt="The Isle gameplay" class="gallery-image" id="imageModal" src="./img/2025061.JPG">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Em manada</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img alt="The Isle gameplay" class="gallery-image" src="./img/2049061.JPG">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Em combate</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img alt="The Isle gameplay" class="gallery-image" src="./img/20BD6C1.JPG">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Dinossauros especiais</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img alt="The Isle gameplay" class="gallery-image" src="./img/20FAD61.JPG">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Encontro de espécies!</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img alt="The Isle gameplay" class="gallery-image" src="./img/20FAD61.JPG">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Presas afiadas</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img class="gallery-image" src="./img/2091EB1.JPG">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Vista épica</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img class="gallery-image" src="./img/2080AA1.JPG">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Solitário</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img class="gallery-image" src="./img/20A8441.JPG">
+                    <div class="gallery-overlay">
+                        <div class="gallery-caption">Em Familia com os bebês</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Regras links -->
+    <section id="regras-links">
+        <div class="container">
+            <h3 class="rules-links-title">Regras Completas no Discord</h3>
+            <p class="rules-links-subtitle">Clique nos botões abaixo para acessar as regras detalhadas no nosso servidor
+                Discord</p>
+            <div class="rules-buttons-container">
+                <a class="card-button" href="/view/regras-discord.html" target="_blank"><i
+                        class="fa-duotone fa-solid fa-arrow-up-right-from-square"></i> Regras do Discord.</a>
+                <a class="card-button" href="/view/regras-theisle-ptbr.html" target="_blank"><i
+                        class="fa-duotone fa-solid fa-arrow-up-right-from-square"></i> Regras do The Isle em
+                    Português.</a>
+                <a class="card-button" href="/view/regras-theisle-en.html" target="_blank"><i
+                        class="fa-duotone fa-solid fa-arrow-up-right-from-square"></i> Regras do The Isle em Inglês.</a>
+                <a class="card-button" href="/view/regras-theisle-es.html" target="_blank"><i
+                        class="fa-duotone fa-solid fa-arrow-up-right-from-square"></i> Regras do The Isle em
+                    Espanhol.</a>
+            </div>
+            <hr class="linha-horizontal">
+            <div class="rules-buttons-container">
+                <a class="card-button" href="/view/limite-de-grupo-pt.html" target="_blank"><i
+                        class="fa-duotone fa-solid fa-arrow-up-right-from-square"></i> Regras do Limite de Grupo em
+                    Português.</a>
+                <a class="card-button" href="/view/limite-grupo-en.html" target="_blank"><i
+                        class="fa-duotone fa-solid fa-arrow-up-right-from-square"></i> Regras do Limite de Grupo em
+                    Inglês.</a>
+                <a class="card-button" href="/view/limite-grupo-es.html" target="_blank"><i
+                        class="fa-duotone fa-solid fa-arrow-up-right-from-square"></i> Regras do Limite de Grupo em
+                    Espanhol.</a>
+            </div>
+        </div>
+    </section>
+    <!-- Entre Agora -->
+    <section id="entrar">
+        <div class="container">
+            <h2 class="section-title">Entre Agora no Servidor</h2>
+            <p class="section-subtitle">Junte-se a centenas de jogadores em uma experiência de sobrevivência jurássica
+                única</p>
+            <div class="join-container">
+                <h3 class="join-title">Pronto para a aventura?</h3>
+                <p class="join-text">The Isle Legacy é um jogo de sobrevivência onde você vive como um dinossauro em um
+                    ecossistema perigoso e imprevisível. No servidor Next Level Brasil, você encontrará uma comunidade
+                    ativa e uma equipe de administração dedicada.</p>
+                <div class="join-buttons">
+                    <a class="btn btn-green" href="https://store.steampowered.com/app/376210/The_Isle/" target="_blank">
+                        <i class="fab fa-steam"></i> Comprar na Steam
+                    </a>
+                    <a class="btn btn-discord" href="https://discord.gg/nextlevelbrasil" target="_blank">
+                        <i class="fab fa-discord"></i> Entrar no Discord
+                    </a>
+                    <a class="btn btn-white" href="https://nextlevel.raptorcloud.com.br/" target="_blank">
+                        <i class="fas fa-server"></i> Acessar o Painel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Sobre o Servidor -->
+    <section id="sobre">
+        <div class="container">
+            <h2 class="section-title">Sobre o Servidor</h2>
+            <p class="section-subtitle">Conheça o Next Level Brasil, o melhor servidor brasileiro de The Isle Legacy</p>
+            <div class="about-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-server"></i></div>
+                    <h3 class="feature-title">Servidor Estável</h3>
+                    <p class="feature-text">Nosso servidor conta com uma infraestrutura robusta e administração ativa,
+                        garantindo uma experiência de jogo sem interrupções.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h3 class="feature-title">Comunidade Ativa</h3>
+                    <p class="feature-text">Faça parte de uma das maiores comunidades brasileiras de The Isle, com
+                        eventos regulares e jogadores ativos todos os dias.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                    <h3 class="feature-title">Regras Balanceadas</h3>
+                    <p class="feature-text">Regras justas que garantem diversão para todos os estilos de jogo, com foco
+                        na sobrevivência e interação entre jogadores.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Next Level Brasil</div>
+            <p class="footer-text">A melhor experiência brasileira de The Isle Legacy</p>
+            <div class="social-links">
+                <a class="social-link" href="https://discord.gg/nextlevelbrasil" target="_blank">
+                    <i class="fab fa-discord"></i>
+                </a>
+                <a class="social-link" href="https://www.instagram.com/nextleveltheisle/" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a class="social-link" href="https://www.youtube.com/@NextLevel-Brasil" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a class="social-link" href="https://www.twitch.tv/nextlevelbrasil" target="_blank">
+                    <i class="fab fa-twitch"></i>
+                </a>
+            </div>
+            <p class="copyright">© 2025 Next Level Brasil. Todos os direitos reservados.</p>
+        </div>
+        <a href="/public/login.html" style="font-size: 0.7rem; opacity: 0.2;" target="_blank">⚙️</a>
+    </footer>
+    <!-- Botão de voltar ao topo -->
+    <button class="scroll-top" id="scrollTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <!-- JavaScript separado -->
+    <script src="main.js"></script>
+    <!-- Botão da Staff -->
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        async function mostrarNovidades() {
+            try {
+                const res = await fetch('/novidades.json');
+                if (!res.ok) return;
+                const novidades = await res.json();
+
+                function parseDiscordEmojis(text) {
+                    text = text.replace(/<:([a-zA-Z0-9_]+):(\d+)>/g,
+                        (m, nome, id) => `<img src="https://cdn.discordapp.com/emojis/${id}.png" alt=":${nome}:" style="height:1.4em;vertical-align:-0.3em;">`);
+                    text = text.replace(/<a:([a-zA-Z0-9_]+):(\d+)>/g,
+                        (m, nome, id) => `<img src="https://cdn.discordapp.com/emojis/${id}.gif" alt=":${nome}:" style="height:1.4em;vertical-align:-0.3em;">`);
+                    return text;
+                }
+
+                // Primeiro card
+                if (novidades.titulo1 || novidades.descricao1) {
+                    document.querySelector('p[data-edit="atualizacao-4"]').innerHTML =
+                        marked.parse(parseDiscordEmojis(`**${novidades.titulo1 || ''}**\n${novidades.descricao1 || ''}`));
+                }
+                // Segundo card
+                if (novidades.titulo2 || novidades.descricao2) {
+                    document.querySelector('p[data-edit="atualizacao-5"]').innerHTML =
+                        marked.parse(parseDiscordEmojis(`**${novidades.titulo2 || ''}**\n${novidades.descricao2 || ''}`));
+                }
+            } catch (e) { }
+        }
+        mostrarNovidades();
+
+        
+async function atualizarStatusServidorLegacy() {
+    const indicator = document.getElementById('statusIndicator');
+    const badge = document.getElementById('statusBadge');
+    const players = document.getElementById('playersCount');
+    const map = document.getElementById('serverMap');
+    const lastUpdate = document.getElementById('lastUpdate');
+    const connectBtn = document.getElementById('connectBtn'); // pode não existir!
+    const apiUpdateTime = document.getElementById('apiUpdateTime');
+
+    try {
+        const res = await fetch('https://status.nextlevel.net.br/servers/legacy');
+        const data = await res.json();
+        const server = data.server;
+
+        // Status e cor
+        if (server.online) {
+            indicator.style.background = "#4ade80"; // verde
+            badge.textContent = "Online";
+            badge.style.background = "#4ade80";
+            if (connectBtn) {
+                connectBtn.style.pointerEvents = 'auto';
+                connectBtn.style.opacity = 1;
+                connectBtn.href = `steam://connect/${server.host}:${server.port}`;
+            }
+        } else {
+            indicator.style.background = "#f87171"; // vermelho
+            badge.textContent = "Offline";
+            badge.style.background = "#f87171";
+            if (connectBtn) {
+                connectBtn.style.pointerEvents = 'none';
+                connectBtn.style.opacity = 0.5;
+            }
+        }
+
+        // Jogadores
+        players.innerHTML = `${server.players}/${server.maxPlayers} <span class="xs-hidden">jogadores</span>`;
+
+        // Mapa
+        map.textContent = `Mapa: ${server.map || '--'}`;
+
+        // Última atualização
+        const date = new Date(data.timestamp || server.lastUpdate);
+        lastUpdate.textContent = "Atualizado: " +
+            date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+
+        if (apiUpdateTime) {
+            apiUpdateTime.style.display = "";
+            apiUpdateTime.textContent = lastUpdate.textContent;
+        }
+
+    } catch (e) {
+        indicator.style.background = "#f87171";
+        badge.textContent = "Erro API";
+        badge.style.background = "#f87171";
+        players.textContent = "--/--";
+        map.textContent = "Mapa: --";
+        lastUpdate.textContent = "Erro ao consultar";
+        // Se não tem o botão, não faz nada
+    }
+}
+
+// Atualiza ao carregar e a cada 40s
+atualizarStatusServidorLegacy();
+setInterval(atualizarStatusServidorLegacy, 20000);
+    </script> 
+
+</body>
+
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Painel da Staff</title>
+  <link href="style.css" rel="stylesheet" />
+  <!-- Favicon -->
+  <link href="favicon.ico" rel="icon" type="image/x-icon" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    select,
+    textarea,
+    button {
+      margin-top: 0.5rem;
+    }
+
+    .editor-container {
+      padding: 2rem;
+      max-width: 960px;
+      margin: auto;
+    }
+
+    textarea {
+      width: 100%;
+      height: 250px;
+      font-size: 1rem;
+      padding: 0.5rem;
+    }
+
+    #popup,
+    #popupAviso {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #popup .box,
+    #popupAviso .box {
+      background: #222;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 400px;
+      color: white;
+    }
+
+    #popup input,
+    #popup select,
+    #popup button,
+    #popupAviso button {
+      margin-top: 0.5rem;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+    }
+  </style>
+  <!-- Meta clarity -->
+   <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "rv3407q21o");
+</script>
+</head>
+
+<body>
+  <script>
+    function mostrarEdicao(tipo) {
+      document.getElementById('edicao-regras').style.display = tipo === 'regras' ? 'block' : 'none';
+      document.getElementById('edicao-novidades').style.display = tipo === 'novidades' ? 'block' : 'none';
+      document.getElementById('escolha-secao').style.display = tipo === 'escolha' ? 'block' : 'none';
+    }
+  </script>
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+  <div class="server-status">
+    <div class="server-status-container">
+      <div class="status-items">
+        <div class="status-item"><span class="status-badge">STAFF LOGADO</span></div>
+      </div>
+      <div>
+        <a class="server-btn" href="/logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero">
+
+    <div id="escolha-secao" style="text-align:center; margin: 4rem 0;">
+      <button class="btn-green" onclick="mostrarEdicao('regras')"
+        style="margin: 0 1rem; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 12px; transition: all 0.3s ease; cursor: pointer; border: none;">Editar
+        Regras</button>
+      <button class="btn-discord" onclick="mostrarEdicao('novidades')"
+        style="margin: 0 1rem; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 12px; transition: all 0.3s ease; cursor: pointer; border: none;">Editar
+        Novidades</button>
+    </div>
+    <div class="editor-container" id="edicao-regras"
+      style="display:none; margin:2rem; display: flex; flex-direction: column; align-items: center;">
+      <div style="
+    background: rgba(30, 38, 47, 0.86);
+    box-shadow: 0 6px 32px rgba(23,36,45,0.23);
+    border-radius: 24px;
+    backdrop-filter: blur(8px);
+    padding: 3rem 2rem 2rem 2rem;
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  ">
+        <h2 class="hero-title" style="margin-bottom: 2rem; font-size:2.2rem; text-align:center;">Editor de Regras
+          Individual</h2>
+        <select class="btn btn-white" id="arquivo" onchange="carregarArquivo()"
+          style="width:100%; border-radius:12px; margin-bottom:1.2rem; font-size:1.1rem;">
+          <option value="">-- Escolha o arquivo --</option>
+          <option value="regras-discord.html">Regras Discord</option>
+          <option value="regras-theisle-ptbr.html">The Isle PT</option>
+          <option value="regras-theisle-en.html">The Isle EN</option>
+          <option value="regras-theisle-es.html">The Isle ES</option>
+          <option value="limite-de-grupo-pt.html">Limite Grupo PT</option>
+          <option value="limite-grupo-en.html">Limite Grupo EN</option>
+          <option value="limite-grupo-es.html">Limite Grupo ES</option>
+        </select>
+        <div id="seletor-regras" style="width:100%; margin-bottom: 1.2rem;"></div>
+        <textarea class="btn btn-white" id="conteudo" placeholder="Selecione uma regra para editar..."
+          style="border-radius: 12px; resize: vertical; min-height:120px; margin-bottom: 1.5rem; font-size: 1.07rem;"></textarea>
+        <button class="btn btn-green" style="
+        width: 100%;
+        font-size: 1.15rem;
+        font-weight: bold;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 3px 18px rgba(231,198,41,0.09);
+        transition: background 0.3s, box-shadow 0.2s;
+      " onmouseover="this.style.background='#e7c629cc'" onmouseout="this.style.background='#E7C629'"
+          onclick="salvar()">💾 Salvar</button>
+        <div style="margin-top: 1.2rem; display:flex; justify-content: center; gap: 1.3rem; width:100%;">
+          <button class="btn btn-white" style="font-weight: 500; border-radius: 10px;"
+            onclick="window.location='/public/logs.html'">Ver Logs</button>
+          <button class="btn btn-discord" style="font-weight: 500; border-radius: 10px;" onclick="abrirPopup()">Criar
+            Novo Usuário</button>
+          <button class="btn btn-white" style="font-weight: 500; border-radius: 10px;"
+            onclick="mostrarEdicao('escolha')">🔙 Voltar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="edicao-novidades" style="display:none; margin:2rem;">
+      <div class="novidades-editar-bg">
+        <div class="novidades-editar-box">
+          <h2 class="painel-titulo">Editar Novidades / Atualizações</h2>
+          <form action="/salvar-novidades" method="POST" class="painel-novidades-form-horizontal" autocomplete="off"
+            onsubmit="return salvarNovidadesPainel(event)">
+            <div class="painel-novidade-card-edit">
+              <label for="descricao1">Patch Notes Dinossauros & Regras</label>
+              <textarea name="descricao1" id="descricao1" rows="6" placeholder="Detalhe do que foi alterado"
+                required></textarea>
+
+            </div>
+            <div class="painel-novidade-card-edit">
+              <label for="descricao2">Descrição do Evento</label>
+              <textarea name="descricao2" id="descricao2" rows="6" placeholder="Detalhes" required></textarea>
+
+              <!-- Mova os botões para dentro do segundo card! -->
+              <div class="painel-botoes">
+                <button type="button" class="painel-botao voltar" onclick="mostrarEdicao('escolha')">
+                  <i class="fa fa-arrow-left"></i> Voltar
+                </button>
+                <button type="submit" class="painel-botao salvar">
+                  <i class="fa fa-save"></i> Salvar
+                </button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+  <div id="popup">
+    <div class="box">
+      <h3 style="text-align:center;">Criar Novo Usuário</h3>
+      <input id="novoUser" placeholder="Usuário" type="text" />
+      <input id="novaSenha" placeholder="Senha" type="password" />
+      <select id="novaRole">
+        <option value="staff">Staff</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button class="btn btn-green" onclick="criarUsuario()">Criar</button>
+      <button class="btn btn-white" onclick="fecharPopup()">Cancelar</button>
+      <div id="mensagem" style="margin-top:1rem;"></div>
+    </div>
+  </div>
+  <div id="popupAviso">
+    <div class="box">
+      <h3>Alteração Proibida</h3>
+      <p>Este conteúdo não pode ser alterado. A edição foi bloqueada para segurança.</p>
+      <button class="btn btn-white" onclick="document.getElementById('popupAviso').style.display='none'">OK</button>
+    </div>
+  </div>
+  <script>
+    let regrasGlobais = {};
+    let regraAtual = '';
+    let arquivoAtual = '';
+
+    async function carregarArquivo() {
+      const nome = document.getElementById('arquivo').value;
+      if (!nome) return;
+      const res = await fetch(`/file?name=${nome}`);
+      const json = await res.json();
+      arquivoAtual = nome;
+      regrasGlobais = json.regras;
+      const seletor = document.getElementById('seletor-regras');
+      seletor.innerHTML = '';
+      const sel = document.createElement('select');
+      sel.id = 'select-regra';
+      sel.className = 'btn btn-white';
+      sel.onchange = () => {
+        regraAtual = sel.value;
+        if (regraAtual === 'conteudo') {
+          document.getElementById('popupAviso').style.display = 'flex';
+          document.getElementById('conteudo').value = '';
+          return;
+        }
+        document.getElementById('conteudo').value = regrasGlobais[regraAtual];
+      };
+      Object.keys(regrasGlobais).forEach(regra => {
+        if (regra === 'conteudo') return; // oculta a regra "conteudo"
+        const opt = document.createElement('option');
+        opt.value = regra;
+        opt.textContent = regra;
+        sel.appendChild(opt);
+      });
+      seletor.appendChild(sel);
+      sel.dispatchEvent(new Event('change'));
+    }
+
+    async function salvar() {
+      const texto = document.getElementById('conteudo').value;
+      if (texto.length < 3) {
+        alert("Conteúdo muito curto. A regra não será salva.");
+        return;
+      }
+      if (regraAtual === 'conteudo') {
+        document.getElementById('popupAviso').style.display = 'flex';
+        return;
+      }
+      const body = { name: arquivoAtual, edits: { [regraAtual]: texto } };
+      const res = await fetch('/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      alert(await res.text());
+    }
+
+    function abrirPopup() {
+      document.getElementById('popup').style.display = 'flex';
+    }
+
+    function fecharPopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+
+    async function criarUsuario() {
+      const username = document.getElementById('novoUser').value;
+      const password = document.getElementById('novaSenha').value;
+      const role = document.getElementById('novaRole').value;
+      const msg = document.getElementById('mensagem');
+
+      if (!username || !password) {
+        msg.textContent = 'Preencha todos os campos.';
+        msg.style.color = 'orange';
+        return;
+      }
+
+      const res = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, role })
+      });
+
+      const text = await res.text();
+      msg.textContent = text;
+      msg.style.color = res.ok ? 'lightgreen' : 'red';
+    }
+  </script>
+
+  <div id="popupSucesso" class="popup-sucesso-bg" style="display:none;">
+    <div class="popup-sucesso-box">
+      <h3>✅ Sucesso</h3>
+      <p>As novidades foram atualizadas com sucesso!</p>
+      <button onclick="fecharPopupSucesso()" class="painel-botao salvar" style="margin-top:1.5em;">Fechar</button>
+    </div>
+  </div>
+
+  <script>
+    function mostrarPopupSucesso() {
+      document.getElementById('popupSucesso').style.display = 'flex';
+    }
+    function fecharPopupSucesso() {
+      document.getElementById('popupSucesso').style.display = 'none';
+    }
+  </script>
+  <script>
+    async function salvarNovidadesPainel(e) {
+      e.preventDefault();
+      const descricao1 = document.getElementById('descricao1').value;
+      const descricao2 = document.getElementById('descricao2').value;
+
+      const res = await fetch('/salvar-novidades', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ descricao1, descricao2 })
+      });
+
+
+      if (res.ok) {
+        mostrarPopupSucesso();
+      } else {
+        alert('Erro ao salvar novidades!');
+      }
+      return false;
+    }
+  </script>
+
+</body>
+
+</html>

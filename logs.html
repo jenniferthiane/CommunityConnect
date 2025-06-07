@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Logs de Alterações</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- Meta clarity -->
+   <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "rv3407q21o");
+</script>
+</head>
+<body>
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+  <section class="hero">
+    <div class="hero-content">
+      <h2 class="hero-title">Logs de Alterações</h2>
+      <div style="margin-bottom: 1rem;">
+        <select id="filtro-usuario" class="btn btn-white" onchange="aplicarFiltro()">
+          <option value="">Todos os usuários</option>
+        </select>
+        <input type="date" id="filtro-data" class="btn btn-white" onchange="aplicarFiltro()" />
+        <button onclick="baixarJSON()" class="btn btn-white">Baixar JSON</button>
+        <button onclick="baixarCSV()" class="btn btn-white">Exportar CSV</button>
+        <button onclick="baixarPDF()" class="btn btn-white">Exportar PDF</button>
+        <button onclick="limparLogs()" class="btn btn-red">Limpar Logs</button>
+      </div>
+      <div id="log-container" style="text-align: left; max-height: 500px; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 1rem; border-radius: 8px;"></div>
+      <br>
+      <a href="/public/painel.html" class="btn btn-white">Voltar</a>
+    </div>
+  </section>
+
+  <script>
+    let todosLogs = [];
+
+    async function carregarLogs() {
+      const res = await fetch("/logs");
+      todosLogs = await res.json();
+      const usuarios = [...new Set(todosLogs.map(log => log.user))];
+      const select = document.getElementById("filtro-usuario");
+      usuarios.forEach(u => {
+        const opt = document.createElement("option");
+        opt.value = u;
+        opt.textContent = u;
+        select.appendChild(opt);
+      });
+      aplicarFiltro();
+    }
+
+    function aplicarFiltro() {
+      const usuario = document.getElementById("filtro-usuario").value;
+      const data = document.getElementById("filtro-data").value;
+      let filtrados = [...todosLogs];
+
+      if (usuario) filtrados = filtrados.filter(log => log.user === usuario);
+      if (data) {
+        const dia = new Date(data).toISOString().slice(0, 10);
+        filtrados = filtrados.filter(log => log.date.startsWith(dia));
+      }
+
+      const container = document.getElementById("log-container");
+      if (!filtrados.length) {
+        container.innerHTML = "<p>Nenhum log encontrado com os filtros atuais.</p>";
+        return;
+      }
+
+      container.innerHTML = filtrados.reverse().map(log => `
+        <div style="margin-bottom: 1rem;">
+          <strong>${new Date(log.date).toLocaleString()}</strong><br>
+          Usuário: <code>${log.user}</code><br>
+          Arquivo: <code>${log.file}</code><br>
+          Ação: <code>${log.action}</code><br>
+          <details>
+            <summary>Detalhes</summary>
+            <pre style="font-size: 0.75rem; margin-top: 0.5rem;"><b>ANTES:</b>
+${log.before || ''}
+
+<b>DEPOIS:</b>
+${log.after || ''}</pre>
+          </details>
+        </div>
+      `).join('');
+    }
+
+    function baixarJSON() {
+      const blob = new Blob([JSON.stringify(todosLogs, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "logs.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function baixarCSV() {
+      const csv = ["Data,Usuário,Arquivo,Ação"];
+      todosLogs.forEach(log => {
+        csv.push(`"${log.date}","${log.user}","${log.file}","${log.action}"`);
+      });
+      const blob = new Blob([csv.join("\n")], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "logs.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function baixarPDF() {
+      const element = document.getElementById("log-container");
+      html2pdf().set({
+        margin: 0.5,
+        filename: "logs.pdf",
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      }).from(element).save();
+    }
+
+    async function limparLogs() {
+      if (!confirm("Tem certeza que deseja apagar todos os logs?")) return;
+      const res = await fetch("/logs/clear", { method: "POST" });
+      if (res.ok) {
+        todosLogs = [];
+        aplicarFiltro();
+        alert("Logs apagados!");
+      } else {
+        alert("Erro ao apagar logs.");
+      }
+    }
+
+    carregarLogs();
+  </script>
+</body>
+</html>
