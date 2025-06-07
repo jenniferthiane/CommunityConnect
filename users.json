@@ -1,0 +1,32 @@
+[
+  {
+    "username": "admin",
+    "passwordHash": "$2b$10$onMDNpy8EtcyuGkSXk5pUecz6d6/QUiLMdeCP8SExBV/Z/mHLE2fu",
+    "role": "admin"
+  },
+  {
+    "username": "Murilo",
+    "passwordHash": "$2b$10$zg4snZT2mABUhGuPXr1jeOE36lqOqaaQ0qpNy6zFKmVQdrKiAvYMO",
+    "role": "admin"
+  },
+  {
+    "username": "Jenny",
+    "passwordHash": "$2b$10$lXUruK/4kgJ0NWQ4ucuyi.redO/TUoQtJH9kAnh/YlGGHPXST2qwK",
+    "role": "editor"
+  },
+  {
+    "username": "Action",
+    "passwordHash": "$2b$10$6ekoL4m/Ks5Wa7AP8n.tmOk0KNd1SPsCIawBpfXvKf9bw64XhJC5u",
+    "role": "admin"
+  },
+  {
+    "username": "Theone",
+    "passwordHash": "$2b$10$Qe2XFUQV44ZSTcNS3jBFZuaL.CPjF4Nq.9TfGcob3JWPOu/vnGcAu",
+    "role": "admin"
+  },
+  {
+    "username": "Karma",
+    "passwordHash": "$2b$10$1W10chRp.fYbrB9nncE8EeX2bCLlNps0VAUbAl9yovBSwwns8EVzS",
+    "role": "staff"
+  }
+]
